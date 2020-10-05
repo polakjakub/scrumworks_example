@@ -40,14 +40,13 @@ class scrumworks_example extends Command
     public function handle()
     {
         $users = DB::select('SELECT * FROM users');
-        
-        echo "Found " . count($users) . " users\n";
+    
+        $this->output->write("Found " . count($users) . " users", true);
         foreach ($users as $user) {
-            echo "\tCalling API for user {$user->name}({$user->id}) with result...";
+            $this->output->write( "\tCalling API for user {$user->name}({$user->id}) with result... ");
             $query = http_build_query(["userId" => $user->id, "name" => $user->name,]);
             $response = Http::get("https://example.com/api/dosomething?" . $query);
-            echo 200 == $response->status() ? '    OK' : "NOT OK";
-            echo "\n";
+            $this->output->write( 200 == $response->status() ? 'OK' : "NOT OK", true);
         }
     }
 }
