@@ -45,7 +45,7 @@ class scrumworks_example extends Command
         foreach ($users as $user) {
             $this->output->write( "\tCalling API for user {$user->name}({$user->id}) with result... ");
             $query = http_build_query(["userId" => $user->id, "name" => $user->name,]);
-            $response = Http::get("https://example.com/api/dosomething?" . $query);
+            $response = Http::get(env("EXAMPLE_API_ENDPOINT") . "?" . $query);
             $this->output->write( 200 == $response->status() ? 'OK' : "NOT OK", true);
         }
     }
